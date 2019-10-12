@@ -1,0 +1,27 @@
+{
+  "name": "scrapednewsrb",
+  "version": "1.0.0",
+  "description": "news app",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ramonb621/ScrapedNewsRB.git"
+  },
+  "author": "Ramon",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ramonb621/ScrapedNewsRB/issues"
+  },
+  "homepage": "https://github.com/ramonb621/ScrapedNewsRB#readme",
+  "dependencies": {
+    "axios": "^0.19.0",
+    "cheerio": "^1.0.0-rc.3",
+    "express": "^4.17.1",
+    "express-handlebars": "^3.1.0",
+    "mongoose": "^5.7.4"
+  }
+}
