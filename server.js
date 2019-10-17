@@ -14,13 +14,6 @@ var PORT = process.env.PORT || 3000;
 // Initialize Express
 var app = express();
 
-// Make public a static folder
-app.use(express.static("public"));
-
-// Parse request body as JSON
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-
 var exphbs = require("express-handlebars");
 
 app.engine("handlebars", exphbs({ defaultLayout: "main" }));
@@ -36,6 +29,12 @@ app.get("/", function (req, res) {
 // Use morgan logger for logging requests
 app.use(logger("dev"));
 
+// Parse request body as JSON
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
+// Make public a static folder
+app.use(express.static("public"));
 
 // Connect to the Mongo DB
 // mongoose.connect(MONGODB_URI);
@@ -46,11 +45,11 @@ mongoose.connect("mongodb://localhost/mongoHeadlines", { useNewUrlParser: true, 
 // A GET route for scraping the echoJS website
 app.get("/scrape", function(req, res) {
   // First, we grab the body of the html with axios
-  axios.get("https://www.vice.com/en_us/section/news").then(function(response) {
+  axios.get("https://www.npr.org/sections/news/archive").then(function(response) {
     // Then, we load that into cheerio and save it to $ for a shorthand selector
     var $ = cheerio.load(response.data);
     // Now, we grab every h2 within an article tag, and do the following:
-    $("article .has-image").each(function(i, element) {
+    $(".archivelist article").each(function(i, element) {
       // Save an empty result object
       var result = {};
       // for(let i = 0; i < element.length; i++){
@@ -58,17 +57,9 @@ app.get("/scrape", function(req, res) {
       // }
 
       // Add the text and href of every link, and save them as properties of the result object
-      result.title = $(element)
-        .children(".item-info")
-        .children("h2.title")
-        .text();
-      result.link = $(element)
-        .children(".item-info")
-        .children("h2.title")
-        .find("a")
-        .attr("href");
-      result.summary = $(element).children(".item-info").children("p.teaser").text();
-      console.log(result.title);
+      result.title = $(element).children(".item-info").children("h2.title").html();
+      result.link = $(element).children(".item-info").children("h2.title").attr("href");
+      result.summary = $(element).children(".item-info").children("p.teaser").children("a").text();      console.log(result.title);
       console.log(result.link);
       console.log(result.summary);
       // Create a new Article using the `result` object built from scraping
@@ -129,7 +120,7 @@ app.post("/articles/:id", function(req, res) {
   db.Note.create(req.body)
     .then(function(dbNote) {
 
-      return db.User.findOneAndUpdate({}, { $push: { note: dbNote._id } }, { new: true });
+      return db.Article.findOneAndUpdate({ _id: req.params.id }, { note: dbNote._id }, { new: true });
     })
     .then(function(dbArticle) {
       res.json(dbArticle);
