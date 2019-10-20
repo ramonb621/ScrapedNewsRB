@@ -1,11 +1,24 @@
+/* font-family: 'Special Elite', cursive;
+font-family: 'Mansalva', cursive;
+font-family: 'Luckiest Guy', cursive; */
 body { 
-  background-color: rgba(33, 108, 179, 0.308) 
+  /* background-color: rgba(33, 108, 179, 0.308); */
+  background: url(../photo-1566378246598-5b11a0d486cc.jpg);
 }
 h1{
   width: 100%;
   position: relative;
   margin: 20px 0;
   text-align: center;
+  font-size: 38pt;
+}
+h1, h2{
+  font-family: 'Luckiest Guy', cursive;
+  text-shadow:
+  -1px -1px 0 #F2F2F2,
+  1px -1px 0 #F2F2F2,
+  -1px 1px 0 #F2F2F2,
+  1px 1px 0 #F2F2F2;
 }
 #wrapper {
   width: 90%;
@@ -18,44 +31,58 @@ h1{
   position: relative;
   overflow: auto;
   width: 50%;
-  height: 700px;
+  height: 500px;
+  font-family: 'Special Elite', cursive;
+  font-weight: bold;
 }
 p{
   border: 1px solid black;
   padding: 5px;
   overflow: hidden;
+  background-color: #F2F2F2;
+  text-align: justify;
 }
 #notes {
   float: right;
-  width: 30%;
+  width: 45%;
 }
-#createnote{
+#createnote, #savenote{
   position: relative;
   display: block;
-  margin: auto;
+  margin: 5px auto auto;
+  border-radius: 8px;
+  padding: 5px;
 }
 textarea, input {
   display: block;
   width: 100%;
-  background-color: #FCF5C7;
+  border-radius: 15px;
 }
 input {
   height: 36px;
   font-size: 24px;
 }
+#bodyinput, #titleinput, button{
+  font-family: 'Mansalva', cursive;
+  border: 1px solid black;
+  background-color: #F2F2F2;
+}
 textarea {
   height: 200px;
   font-size: 18px;
 }
-@media screen and (max-width: 575px){
-  h2{
-    left: 0;
-  }
-  #articles{
-    width:50%;
-    left: 0;
-  }
-  #notes{
-    width: 50%;
-  }
+button:hover{
+  border: none;
+}
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #F2F2F2; 
+}
+ ::-webkit-scrollbar-thumb {
+  background: #555; 
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #000; 
 }
