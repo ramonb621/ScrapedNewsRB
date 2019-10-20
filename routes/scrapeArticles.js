@@ -35,7 +35,8 @@ module.exports = function(app){
             console.log(result);
         });
     
-        res.send("Scrape Is Complete!");
+        // res.send("Scrape Is Complete!");
+        res.redirect("/");
       });
     });
     
@@ -44,7 +45,7 @@ module.exports = function(app){
     
       db.Article.find({})
       .then(function(dbArticle) {
-        res.json(dbArticle.reverse());
+        res.json(dbArticle);
       })
       .catch(function(err) {
         res.json(err);

@@ -1,13 +1,21 @@
-$.getJSON("/articles", function(data) {
 
-  for (var i = 0; i < data.length; i++) {
+function getResults() {
+  $.getJSON("/articles", function(data) {
 
-    $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + "<a href='" + data[i].link + "'>" + data[i].link + "</a>" + "<br />" + data[i].summary + "<button data-id='" + data[i]._id + "' id='createnote'>Create Note</button>" + "</p>");
-  }
+    for (var i = 0; i < data.length; i++) {
+
+      $("#articles").append("<p data-id='" + data[i]._id + "'>" + data[i].title + "<br />" + "<a href='" + data[i].link + "'>" + data[i].link + "</a>" + "<br />" + data[i].summary + "<button data-id='" + data[i]._id + "' id='createnote'>Create Note</button>" + "</p>");
+    }
+  });
+}
+
+$(document).on("click", "#scrape", function() {
+
+  getResults();
+
 });
 
-
-$(document).on("click", "button", function() {
+$(document).on("click", "#createnote", function() {
 
   $("#notes").empty();
 
@@ -58,10 +66,31 @@ $(document).on("click", "#savenote", function() {
 
       console.log(data);
 
-      $("#notes").empty();
+      $("#saved").append("<p class='saved' data-id=" + thisId + "><span class='dataTitle' data-id=" +
+      data._id + ">" + data.title + data.body + "</span><span class=delete>X</span></p>");
+
+      // $("#notes").empty();
+      $("#titleinput").val("");
+    $("#bodyinput").val("");
     });
+});
 
+$(document).on("click", ".saved", function() {
 
-    $("#titleinput").val("");
-  $("#bodyinput").val("");
+  var selected = $(this).parent();
+
+  $.ajax({
+    type: "PUT",
+    url: "/articles/" + selected.attr("data-id"),
+
+    success: function(response) {
+
+      selected.remove();
+      selected.empty();
+      $(".saved").empty();
+      $("#titleinput").val("");
+      $("#bodyinput").val("");
+
+    }
+  });
 });
