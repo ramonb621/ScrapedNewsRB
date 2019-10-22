@@ -10,9 +10,15 @@ function getResults() {
 }
 
 $(document).on("click", "#scrape", function() {
+  $.ajax({
+    method: "GET",
+    url: "/scrape"
+  }).then(function(data){
 
-  getResults();
+    console.log(data);
+    getResults();
 
+  })
 });
 
 $(document).on("click", "#createnote", function() {
@@ -75,18 +81,37 @@ $(document).on("click", "#savenote", function() {
     });
 });
 
-$(document).on("click", ".saved", function() {
+// $(document).on("click", ".saved", function() {
+
+//   var selected = $(this).parent();
+
+//   $.ajax({
+//     type: "PUT",
+//     url: "/articles/" + selected.attr("data-id"),
+
+//     success: function(response) {
+
+//       selected.remove();
+//       selected.empty();
+//       $(".saved").empty();
+//       $("#titleinput").val("");
+//       $("#bodyinput").val("");
+
+//     }
+//   });
+// });
+
+$(document).on("click", ".delete", function() {
 
   var selected = $(this).parent();
 
   $.ajax({
-    type: "PUT",
+    type: "DELETE",
     url: "/articles/" + selected.attr("data-id"),
 
     success: function(response) {
 
       selected.remove();
-      selected.empty();
       $(".saved").empty();
       $("#titleinput").val("");
       $("#bodyinput").val("");
