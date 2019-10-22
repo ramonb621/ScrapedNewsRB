@@ -10,7 +10,7 @@ var cheerio = require("cheerio");
 
 var PORT = process.env.PORT || 3000;
 
-// var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
+var MONGODB_URI = process.env.MONGODB_URI || "mongodb://localhost/mongoHeadlines";
 // Initialize Express
 var app = express();
 
@@ -37,7 +37,7 @@ app.use(express.json());
 app.use(express.static("public"));
 
 // Connect to the Mongo DB
-// mongoose.connect(MONGODB_URI);
+mongoose.connect(MONGODB_URI);
 mongoose.connect("mongodb://localhost/mongoHeadlines", { useNewUrlParser: true, useUnifiedTopology: true });
 
 // Routes
