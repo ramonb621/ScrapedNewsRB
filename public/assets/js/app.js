@@ -15,8 +15,9 @@ $(document).on("click", "#scrape", function() {
     url: "/scrape"
   }).then(function(data){
 
-    console.log(data);
+    console.log("Scraping...");
     getResults();
+    console.log("Scraping complete!");
 
   })
 });
@@ -106,7 +107,7 @@ $(document).on("click", ".delete", function() {
   var selected = $(this).parent();
 
   $.ajax({
-    type: "DELETE",
+    type: "GET",
     url: "/articles/" + selected.attr("data-id"),
 
     success: function(response) {
@@ -115,7 +116,6 @@ $(document).on("click", ".delete", function() {
       $(".saved").empty();
       $("#titleinput").val("");
       $("#bodyinput").val("");
-
     }
   });
 });
